@@ -64,6 +64,11 @@
           <input type="date" id="returnDate">
         </div>
 
+        <div class="form-group hidden" id="group-deliveryDate">
+          <label for="deliveryDate">Delivery Date:</label>
+          <input type="date" id="deliveryDate">
+        </div>
+
         <div class="form-group hidden" id="group-itemTitle">
           <label for="itemTitle">Item Title:</label>
           <input type="text" id="itemTitle" placeholder="e.g. The Great Gatsby">
@@ -116,6 +121,25 @@
   <script>
     const letters = {
       librarygo: {
+        welcome: {
+          name: "Welcome Email",
+          subject: "Welcome to LibraryGO",
+          fields: ["customerName", "deliveryDate"],
+          body: `<p>Dear {name},</p>
+          <p>Thank you for joining the Georges River LibraryGO program. This service will provide you with resources to aid the development and enjoyment of your child at this critical stage.</p>
+          <p>Here’s how it works:</p>
+          <p>A bag containing items selected by library staff will be delivered to your early learning centre every three weeks.</p>
+          <ul>
+            <li>A calendar will be supplied with your first delivery on {deliveryDate}.</li>
+            <li>You will receive an automated message prior to each swap which will advise you of your item list and due date.</li>
+            <li>Please have each current bag available for collection on the morning of the delivery date. We will collect this bag and deliver one with new items.</li>
+            <li>If your bag is not available, we will renew your loans until the following delivery. Failed bag swaps cannot be rescheduled unless it is due to an error from Georges River Libraries.</li>
+            <li>In the event of three failed deliveries in a calendar year, the account will be converted to a Junior Library Membership.</li>
+            <li>Let us know in advance if ever you are unable to have your bag available. A cancellation does not count as a failed delivery.</li>
+          </ul>
+          <p>Please call us on 9330 9511 if you have queries or comments. We look forward to being of service to your family.</p>
+          <p>Kind regards,<br>Your LibraryGO Team</p>`
+        },
         thirdFail: {
           name: "Third Failed Delivery",
           subject: "LibraryGO – Third Failed Delivery",
@@ -248,12 +272,15 @@
       const name = document.getElementById('customerName').value.trim() || (team === 'librarygo' ? 'LibraryGO member' : 'Valued Member');
       const returnDateRaw = document.getElementById('returnDate').value;
       const returnDate = formatDate(returnDateRaw) || '[return date]';
+      const deliveryDateRaw = document.getElementById('deliveryDate').value;
+      const deliveryDate = formatDate(deliveryDateRaw) || '[delivery date]';
       const title = document.getElementById('itemTitle').value.trim() || '[Title]';
       const barcode = document.getElementById('itemBarcode').value.trim() || '[Barcode]';
       const location = document.getElementById('location').value.trim() || '[location]';
 
       body = body.replace(/{name}/g, name);
       body = body.replace(/{returnDate}/g, returnDate);
+      body = body.replace(/{deliveryDate}/g, deliveryDate);
       body = body.replace(/{title}/g, title);
       body = body.replace(/{barcode}/g, barcode);
       body = body.replace(/{location}/g, location);
